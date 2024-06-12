@@ -13,7 +13,7 @@ try:
     diabetes_model = pickle.load(open('obesitas_model.sav', 'rb'))
 
     # Membaca scaler
-    scaler = pickle.load(open('Scaler (2).pkl', 'rb'))
+    scaler = pickle.load(open('StandardScaler.pkl', 'rb'))
     
     st.write("Model and scaler loaded successfully!")
     
