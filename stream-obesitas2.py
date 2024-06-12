@@ -51,7 +51,7 @@ CALC_input = st.selectbox("Seberapa Sering Mengkonsumsi Alkohol:", ('Tidak Perna
 FAVC_input = st.selectbox("Apakah Anda Sering Mengkonsumsi Makanan Tinggi Kalori:", ('ya', 'tidak'))
 SCC_input = st.selectbox("Apakah Anda Memantau Asupan Kalori:", ('ya', 'tidak'))
 SMOKE_input = st.selectbox("Apakah Anda Merokok:", ('ya', 'tidak'))
-family_history_with_overweight_input = st.selectbox("Apakah Anda Memiliki Anggota Keluarga yang Kelebihan Berat Badan:", ('ya', 'tidak'))
+FHO_input = st.selectbox("Apakah Anda Memiliki Anggota Keluarga yang Kelebihan Berat Badan:", ('ya', 'tidak'))
 CAEC_input = st.selectbox("Seberapa Sering Anda Makan di Antara Makanan:", ('Tidak Pernah', 'Kadang-Kadang', 'Sering', 'Selalu'))
 MTRANS_input = st.selectbox("Jenis Transportasi Apa yang Anda Gunakan:", ('mobil', 'Sepeda motor', 'sepeda', 'Transportasi Umum', 'Berjalan kaki'))
 
@@ -62,7 +62,7 @@ try:
     FAVC_y = label_encoders['FAVC'].transform([FAVC_input])[0]
     SCC_y = label_encoders['SCC'].transform([SCC_input])[0]
     SMOKE_y = label_encoders['SMOKE'].transform([SMOKE_input])[0]
-    family_history_with_overweight_y = label_encoders['family_history_with_overweight'].transform([family_history_with_overweight_input])[0]
+    family_history_with_overweight_y = label_encoders['family_history_with_overweight'].transform([FHO_input])[0]
     CAEC_y = label_encoders['CAEC'].transform([CAEC_input])[0]
     MTRANS_y = label_encoders['MTRANS'].transform([MTRANS_input])[0]
 except KeyError as e:
