@@ -2,6 +2,7 @@ import streamlit as st
 import numpy as np
 import pickle
 from sklearn.preprocessing import StandardScaler, LabelEncoder
+import os
 
 st.write("Starting application...")
 
@@ -18,7 +19,6 @@ try:
     label_encoders = pickle.load(open('Encoders.pkl', 'rb'))
     
     st.write("Model, scaler, and label encoder loaded successfully!")
-    st.write("Available encoders:", list(label_encoders.keys()))
     
 except FileNotFoundError as e:
     st.error(f"FileNotFoundError: {e}")
@@ -32,26 +32,17 @@ col1, col2 = st.columns(2)
 with col1:
     Age = st.text_input("Usia")
     if Age != '':
-        try:
-            Age = float(Age)  # Konversi ke float
-        except ValueError:
-            st.error("Usia harus berupa angka.")
+        Age = float(Age)  # Konversi ke float
 
 with col2:
     Height = st.text_input("Tinggi Badan")
     if Height != '':
-        try:
-            Height = float(Height)  # Konversi ke float
-        except ValueError:
-            st.error("Tinggi Badan harus berupa angka.")
+        Height = float(Height)  # Konversi ke float
 
 with col1:
     Weight = st.text_input("Berat Badan")
     if Weight != '':
-        try:
-            Weight = float(Weight)  # Konversi ke float
-        except ValueError:
-            st.error("Berat Badan harus berupa angka.")
+        Weight = float(Weight)  # Konversi ke float
 
 # Dropdown input fields
 Sex_input = st.selectbox("Pilih jenis kelamin:", ('Laki-Laki', 'Perempuan'))
@@ -63,8 +54,8 @@ FHO_input = st.selectbox("Apakah Anda Memiliki Anggota Keluarga yang Kelebihan B
 CAEC_input = st.selectbox("Seberapa Sering Anda Makan di Antara Makanan:", ('Tidak Pernah', 'Kadang-Kadang', 'Sering', 'Selalu'))
 MTRANS_input = st.selectbox("Jenis Transportasi Apa yang Anda Gunakan:", ('mobil', 'Sepeda motor', 'sepeda', 'Transportasi Umum', 'Berjalan kaki'))
 
-# Encoding categorical input fields using the loaded label encoders
 try:
+    # Encoding categorical input fields using the loaded label encoders
     Sex_y = label_encoders['Sex'].transform([Sex_input])[0]
     CALC_y = label_encoders['CALC'].transform([CALC_input])[0]
     FAVC_y = label_encoders['FAVC'].transform([FAVC_input])[0]
@@ -74,7 +65,7 @@ try:
     CAEC_y = label_encoders['CAEC'].transform([CAEC_input])[0]
     MTRANS_y = label_encoders['MTRANS'].transform([MTRANS_input])[0]
 except KeyError as e:
-    st.error(f"KeyError: Encoder for {e} not found. Please check Encoders.pkl.")
+    st.error(f"KeyError: {e}")
 except Exception as e:
     st.error(f"An error occurred during encoding: {e}")
 
@@ -142,5 +133,3 @@ if st.button("Ayo Cek!"):
             st.error(f"ValueError: {e}")
         except Exception as e:
             st.error(f"An error occurred during prediction: {e}")
-    else:
-        st.error("Usia, Tinggi Badan, dan Berat Badan harus diisi dengan benar.")
