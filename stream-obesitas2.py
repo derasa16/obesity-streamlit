@@ -46,7 +46,7 @@ with col1:
         Weight = float(Weight)  # Konversi ke float
 
 # Dropdown input fields
-Gender_input = st.selectbox("Pilih jenis kelamin:", ('Laki-Laki', 'Perempuan'))
+Gender_input = st.selectbox("Pilih jenis kelamin:", ('Male', 'Female'))
 CALC_input = st.selectbox("Seberapa Sering Mengkonsumsi Alkohol:", ('Tidak Pernah', 'Kadang-Kadang', 'Sering', 'Selalu'))
 FAVC_input = st.selectbox("Apakah Anda Sering Mengkonsumsi Makanan Tinggi Kalori:", ('ya', 'tidak'))
 SCC_input = st.selectbox("Apakah Anda Memantau Asupan Kalori:", ('ya', 'tidak'))
