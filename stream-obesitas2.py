@@ -2,15 +2,23 @@ import streamlit as st
 import numpy as np
 import pickle
 from sklearn.preprocessing import StandardScaler
-import os
+
+st.write("Starting application...")
 
 try:
+    st.write("All modules imported successfully!")
     
     # Membaca model
-    diabetes_model = pickle.load(open('obesitas_model.sav', 'rb'))
+    obesitas_model = pickle.load(open('obesitas_model.sav', 'rb'))
 
     # Membaca scaler
-    scaler = pickle.load(open('StandardScaler.pkl', 'rb'))
+    scaler = pickle.load(open('Scaler (2).pkl', 'rb'))
+    
+    # Membaca encoders
+    with open('le.pkl', 'rb') as file:
+        gender_encoder = pickle.load(file)
+    
+    st.write("Model, scaler, and encoders loaded successfully!")
     
 except FileNotFoundError as e:
     st.error(f"FileNotFoundError: {e}")
@@ -40,8 +48,7 @@ Sex_input = st.selectbox(
     "Pilih jenis kelamin:",
     ('Laki-Laki', 'Perempuan')
 )
-gender_mapping = {'Laki-Laki': 1, 'Perempuan': 0}
-Sex_y = gender_mapping[Sex_input]
+Sex_y = gender_encoder.transform([Sex_input])[0]
 
 CALC_input = st.selectbox(
     "Seberapa Sering Mengkonsumsi Alkohol:",
@@ -131,34 +138,42 @@ MTRANS_y = MTRANS_mapping[MTRANS_input]
 Prediksi_Obesitas = ''
 if st.button("Ayo Cek!"):
     if Age and Height and Weight:
-        # Scaling numerical input features
-        scaled_features = scaler.transform([[Age, Height, Weight]])
-        
-        # Combining all features into a single array
-        features = np.array([
-            scaled_features[0][0], scaled_features[0][1], scaled_features[0][2],
-            Sex_y, CALC_y, FAVC_y, FCVC_y, NCP_y, SCC_y, Smoke_y, CH2O_y, FHO_y, FAF_y, TUE_y, CAEC_y, MTRANS_y
-        ]).reshape(1, -1)
-        
-        # Making prediction with Decision Tree
-        Prediksi_Obesitas = diabetes_model.predict(features)
-        
-        # Interpreting the prediction result
-        if Prediksi_Obesitas[0] == 0:
-            Prediksi_Obesitas = "Insufficient Weight"
-        elif Prediksi_Obesitas[0] == 1:
-            Prediksi_Obesitas = "Normal Weight"
-        elif Prediksi_Obesitas[0] == 2:
-            Prediksi_Obesitas = "Overweight Level 1"
-        elif Prediksi_Obesitas[0] == 3:
-            Prediksi_Obesitas = "Overweight Level 2"
-        elif Prediksi_Obesitas[0] == 4:
-            Prediksi_Obesitas = "Overweight Level 3"   
-        elif Prediksi_Obesitas[0] == 5:
-            Prediksi_Obesitas = "Obesity Type 1" 
-        elif Prediksi_Obesitas[0] == 6:
-            Prediksi_Obesitas = "Obesity Type 2" 
-        else:
-            Prediksi_Obesitas = "tidak ditemukan jenis obesitas"
-
-st.success(Prediksi_Obesitas)
+        try:
+            # Scaling numerical input features
+            st.write(f"Age: {Age}, Height: {Height}, Weight: {Weight}")
+            scaled_features = scaler.transform([[Age, Height, Weight]])
+            st.write(f"Scaled features: {scaled_features}")
+            
+            # Combining all features into a single array
+            features = np.array([
+                scaled_features[0][0], scaled_features[0][1], scaled_features[0][2],
+                Sex_y, CALC_y, FAVC_y, FCVC_y, NCP_y, SCC_y, Smoke_y, CH2O_y, FHO_y, FAF_y, TUE_y, CAEC_y, MTRANS_y
+            ]).reshape(1, -1)
+            st.write(f"Features: {features}")
+            
+            # Making prediction with Decision Tree
+            Prediksi_Obesitas = obesitas_model.predict(features)
+            
+            # Interpreting the prediction result
+            if Prediksi_Obesitas[0] == 0:
+                Prediksi_Obesitas = "Insufficient Weight"
+            elif Prediksi_Obesitas[0] == 1:
+                Prediksi_Obesitas = "Normal Weight"
+            elif Prediksi_Obesitas[0] == 2:
+                Prediksi_Obesitas = "Overweight Level 1"
+            elif Prediksi_Obesitas[0] == 3:
+                Prediksi_Obesitas = "Overweight Level 2"
+            elif Prediksi_Obesitas[0] == 4:
+                Prediksi_Obesitas = "Overweight Level 3"   
+            elif Prediksi_Obesitas[0] == 5:
+                Prediksi_Obesitas = "Obesity Type 1" 
+            elif Prediksi_Obesitas[0] == 6:
+                Prediksi_Obesitas = "Obesity Type 2" 
+            else:
+                Prediksi_Obesitas = "tidak ditemukan jenis obesitas"
+            
+            st.success(Prediksi_Obesitas)
+        except ValueError as e:
+            st.error(f"ValueError: {e}")
+        except Exception as e:
+            st.error(f"An error occurred during prediction: {e}")
