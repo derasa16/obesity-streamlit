@@ -16,7 +16,7 @@ try:
     
     # Membaca encoders
     with open('le .pkl', 'rb') as file:
-        gender_encoder = pickle.load(file)
+        encoder = pickle.load(file)
     
     st.write("Model, scaler, and encoders loaded successfully!")
     
@@ -48,12 +48,13 @@ Sex_input = st.selectbox(
     "Pilih jenis kelamin:",
     ('Laki-Laki', 'Perempuan')
 )
-Sex_y = gender_encoder.transform([Sex_input])[0]
+Sex_y = encoder.transform([Sex_input])[0]
 
 CALC_input = st.selectbox(
     "Seberapa Sering Mengkonsumsi Alkohol:",
     ('Tidak Pernah', 'Kadang-Kadang', 'Sering', 'Selalu')
 )
+CALC_X = encoder.transform([CALC_input])[0]
 CALC_mapping = {'Selalu': 3, 'Sering': 2, 'Kadang-Kadang': 1, 'Tidak Pernah': 0}
 CALC_y = CALC_mapping[CALC_input]
 
