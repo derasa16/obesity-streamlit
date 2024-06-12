@@ -1,18 +1,27 @@
 import streamlit as st
+import numpy as np
+import pickle
+from sklearn.preprocessing import StandardScaler
+import os
 
 st.write("Starting application...")
 
 try:
-    import numpy as np
-    import pickle
-    from sklearn.preprocessing import StandardScaler
     st.write("All modules imported successfully!")
-except ModuleNotFoundError as e:
-    st.error(f"ModuleNotFoundError: {e}")
-
-# Memuat model yang disimpan
-model = pickle.load(open('obesity_model.pkl', 'rb'))
-scaler = pickle.load(open('Scaler.pkl', 'rb'))
+    
+    # Path to model and scaler
+    model_path = os.path.join(os.path.dirname(__file__), 'obesity_model.pkl')
+    scaler_path = os.path.join(os.path.dirname(__file__), 'Scaler (2).pkl')
+    
+    # Memuat model yang disimpan
+    model = pickle.load(open(model_path, 'rb'))
+    scaler = pickle.load(open(scaler_path, 'rb'))
+    st.write("Model and scaler loaded successfully!")
+    
+except FileNotFoundError as e:
+    st.error(f"FileNotFoundError: {e}")
+except Exception as e:
+    st.error(f"An error occurred: {e}")
 
 # Judul web
 st.title("Prediksi Tingkat Obesitas")
