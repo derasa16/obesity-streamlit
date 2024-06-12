@@ -16,7 +16,7 @@ try:
     scaler = pickle.load(open('StandardScaler.pkl', 'rb'))
     
     # Membaca label encoder
-    with open('LabelEnc (1).pkl', 'rb') as file:
+    with open('LabelEnc2.pkl', 'rb') as file:
         label_encoders = pickle.load(file)
     
     st.write("Model, scaler, and label encoder loaded successfully!")
