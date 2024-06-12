@@ -57,12 +57,12 @@ MTRANS_input = st.selectbox("Jenis Transportasi Apa yang Anda Gunakan:", ('mobil
 
 try:
     # Encoding categorical input fields using the loaded label encoders
-    Gender_y = label_encoders['Sex'].transform([Gender_input])[0]
+    Gender_y = label_encoders['Gender'].transform([Gender_input])[0]
     CALC_y = label_encoders['CALC'].transform([CALC_input])[0]
     FAVC_y = label_encoders['FAVC'].transform([FAVC_input])[0]
     SCC_y = label_encoders['SCC'].transform([SCC_input])[0]
-    SMOKE_y = label_encoders['Smoke'].transform([SMOKE_input])[0]
-    family_history_with_overweight_y = label_encoders['FHO'].transform([family_history_with_overweight_input])[0]
+    SMOKE_y = label_encoders['SMOKE'].transform([SMOKE_input])[0]
+    family_history_with_overweight_y = label_encoders['family_history_with_overweight'].transform([family_history_with_overweight_input])[0]
     CAEC_y = label_encoders['CAEC'].transform([CAEC_input])[0]
     MTRANS_y = label_encoders['MTRANS'].transform([MTRANS_input])[0]
 except KeyError as e:
