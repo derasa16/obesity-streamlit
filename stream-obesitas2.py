@@ -4,18 +4,13 @@ import pickle
 from sklearn.preprocessing import StandardScaler
 import os
 
-st.write("Starting application...")
-
 try:
-    st.write("All modules imported successfully!")
     
     # Membaca model
     diabetes_model = pickle.load(open('obesitas_model.sav', 'rb'))
 
     # Membaca scaler
     scaler = pickle.load(open('StandardScaler.pkl', 'rb'))
-    
-    st.write("Model and scaler loaded successfully!")
     
 except FileNotFoundError as e:
     st.error(f"FileNotFoundError: {e}")
