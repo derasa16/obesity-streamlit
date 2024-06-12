@@ -9,11 +9,12 @@ st.write("Starting application...")
 try:
     st.write("All modules imported successfully!")
     
-# Membaca model
-diabetes_model = pickle.load(open('obesitas_model.sav', 'rb'))
+    # Membaca model
+    diabetes_model = pickle.load(open('obesitas_model.sav', 'rb'))
 
-# Membaca scaler
-scaler = pickle.load(open('Scaler (2).pkl', 'rb'))
+    # Membaca scaler
+    scaler = pickle.load(open('Scaler (2).pkl', 'rb'))
+    
     st.write("Model and scaler loaded successfully!")
     
 except FileNotFoundError as e:
@@ -145,7 +146,7 @@ if st.button("Ayo Cek!"):
         ]).reshape(1, -1)
         
         # Making prediction with Decision Tree
-        Prediksi_Obesitas = model.predict(features)
+        Prediksi_Obesitas = diabetes_model.predict(features)
         
         # Interpreting the prediction result
         if Prediksi_Obesitas[0] == 0:
