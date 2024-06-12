@@ -19,7 +19,6 @@ try:
     label_encoders = pickle.load(open('Encoders.pkl', 'rb'))
     
     st.write("Model, scaler, and label encoder loaded successfully!")
-    st.write("Label encoders keys:", list(label_encoders.keys()))
     
 except FileNotFoundError as e:
     st.error(f"FileNotFoundError: {e}")
@@ -55,25 +54,15 @@ FHO_input = st.selectbox("Apakah Anda Memiliki Anggota Keluarga yang Kelebihan B
 CAEC_input = st.selectbox("Seberapa Sering Anda Makan di Antara Makanan:", ('Tidak Pernah', 'Kadang-Kadang', 'Sering', 'Selalu'))
 MTRANS_input = st.selectbox("Jenis Transportasi Apa yang Anda Gunakan:", ('mobil', 'Sepeda motor', 'sepeda', 'Transportasi Umum', 'Berjalan kaki'))
 
-# Check if label encoders are loaded correctly and if the keys match
-required_keys = ['Sex', 'CALC', 'FAVC', 'SCC', 'Smoke', 'FHO', 'CAEC', 'MTRANS', 'NObeyesdad']
-if all(key in label_encoders for key in required_keys):
-    try:
-        # Encoding categorical input fields using the loaded label encoders
-        Sex_y = label_encoders['Sex'].transform([Sex_input])[0]
-        CALC_y = label_encoders['CALC'].transform([CALC_input])[0]
-        FAVC_y = label_encoders['FAVC'].transform([FAVC_input])[0]
-        SCC_y = label_encoders['SCC'].transform([SCC_input])[0]
-        Smoke_y = label_encoders['Smoke'].transform([Smoke_input])[0]
-        FHO_y = label_encoders['FHO'].transform([FHO_input])[0]
-        CAEC_y = label_encoders['CAEC'].transform([CAEC_input])[0]
-        MTRANS_y = label_encoders['MTRANS'].transform([MTRANS_input])[0]
-    except KeyError as e:
-        st.error(f"KeyError: {e}")
-    except Exception as e:
-        st.error(f"An error occurred while encoding: {e}")
-else:
-    st.error("Label encoders are not loaded correctly or keys are missing.")
+# Encoding categorical input fields using the loaded label encoders
+Sex_y = label_encoders['Sex'].transform([Sex_input])[0]
+CALC_y = label_encoders['CALC'].transform([CALC_input])[0]
+FAVC_y = label_encoders['FAVC'].transform([FAVC_input])[0]
+SCC_y = label_encoders['SCC'].transform([SCC_input])[0]
+Smoke_y = label_encoders['Smoke'].transform([Smoke_input])[0]
+FHO_y = label_encoders['FHO'].transform([FHO_input])[0]
+CAEC_y = label_encoders['CAEC'].transform([CAEC_input])[0]
+MTRANS_y = label_encoders['MTRANS'].transform([MTRANS_input])[0]
 
 # Other input fields
 FCVC_input = st.selectbox("Seberapa Sering Mengkonsumsi Sayuran:", ('Tidak Pernah', 'Kadang-Kadang', 'Sering', 'Selalu'))
@@ -114,10 +103,25 @@ if st.button("Ayo Cek!"):
             st.write(f"Features: {features}")
             
             # Making prediction with Decision Tree
-            Prediksi_Obesitas_encoded = diabetes_model.predict(features)
+            Prediksi_Obesitas = diabetes_model.predict(features)
             
-            # Decode the prediction result
-            Prediksi_Obesitas = label_encoders['NObeyesdad'].inverse_transform(Prediksi_Obesitas_encoded)[0]
+            # Interpreting the prediction result
+            if Prediksi_Obesitas[0] == 0:
+                Prediksi_Obesitas = "Insufficient Weight"
+            elif Prediksi_Obesitas[0] == 1:
+                Prediksi_Obesitas = "Normal Weight"
+            elif Prediksi_Obesitas[0] == 2:
+                Prediksi_Obesitas = "Overweight Level 1"
+            elif Prediksi_Obesitas[0] == 3:
+                Prediksi_Obesitas = "Overweight Level 2"
+            elif Prediksi_Obesitas[0] == 4:
+                Prediksi_Obesitas = "Overweight Level 3"   
+            elif Prediksi_Obesitas[0] == 5:
+                Prediksi_Obesitas = "Obesity Type 1" 
+            elif Prediksi_Obesitas[0] == 6:
+                Prediksi_Obesitas = "Obesity Type 2" 
+            else:
+                Prediksi_Obesitas = "tidak ditemukan jenis obesitas"
             
             st.success(Prediksi_Obesitas)
         except ValueError as e:
