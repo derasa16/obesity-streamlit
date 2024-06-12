@@ -48,7 +48,7 @@ Sex_input = st.selectbox(
     "Pilih jenis kelamin:",
     ('Laki-Laki', 'Perempuan')
 )
-Sex_y = encoder.transform([Sex_input])[0]
+Sex_y = encoder.transform([Sex_input])[1]
 
 CALC_input = st.selectbox(
     "Seberapa Sering Mengkonsumsi Alkohol:",
