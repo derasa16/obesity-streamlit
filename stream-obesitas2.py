@@ -9,13 +9,11 @@ st.write("Starting application...")
 try:
     st.write("All modules imported successfully!")
     
-    # Path to model and scaler
-    model_path = os.path.join(os.path.dirname(__file__), 'obesity_model.pkl')
-    scaler_path = os.path.join(os.path.dirname(__file__), 'Scaler (2).pkl')
-    
-    # Memuat model yang disimpan
-    model = pickle.load(open(model_path, 'rb'))
-    scaler = pickle.load(open(scaler_path, 'rb'))
+# Membaca model
+diabetes_model = pickle.load(open('obesitas_model.sav', 'rb'))
+
+# Membaca scaler
+scaler = pickle.load(open('Scaler (2).pkl', 'rb'))
     st.write("Model and scaler loaded successfully!")
     
 except FileNotFoundError as e:
