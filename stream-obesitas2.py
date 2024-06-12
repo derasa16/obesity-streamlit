@@ -4,10 +4,7 @@ import pickle
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 import os
 
-st.write("Starting application...")
-
 try:
-    st.write("All modules imported successfully!")
     
     # Membaca model
     diabetes_model = pickle.load(open('obesitas_model.sav', 'rb'))
@@ -18,8 +15,6 @@ try:
     # Membaca label encoder
     with open('LabelEnc2.pkl', 'rb') as file:
         label_encoders = pickle.load(file)
-    
-    st.write("Model, scaler, and label encoder loaded successfully!")
     
 except FileNotFoundError as e:
     st.error(f"FileNotFoundError: {e}")
@@ -97,16 +92,13 @@ if st.button("Ayo Cek!"):
     if Age and Height and Weight:
         try:
             # Scaling numerical input features
-            st.write(f"Age: {Age}, Height: {Height}, Weight: {Weight}")
             scaled_features = scaler.transform([[Age, Height, Weight]])
-            st.write(f"Scaled features: {scaled_features}")
             
             # Combining all features into a single array
             features = np.array([
                 scaled_features[0][0], scaled_features[0][1], scaled_features[0][2],
                 Gender_y, CALC_y, FAVC_y, FCVC_y, NCP_y, SCC_y, SMOKE_y, CH2O_y, family_history_with_overweight_y, FAF_y, TUE_y, CAEC_y, MTRANS_y
             ]).reshape(1, -1)
-            st.write(f"Features: {features}")
             
             # Making prediction with Decision Tree
             Prediksi_Obesitas = diabetes_model.predict(features)
