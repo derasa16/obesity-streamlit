@@ -15,7 +15,7 @@ try:
     scaler = pickle.load(open('StandardScaler.pkl', 'rb'))
     
     # Membaca encoders
-    with open('le.pkl', 'rb') as file:
+    with open('le .pkl', 'rb') as file:
         gender_encoder = pickle.load(file)
     
     st.write("Model, scaler, and encoders loaded successfully!")
