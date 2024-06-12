@@ -46,23 +46,23 @@ with col1:
         Weight = float(Weight)  # Konversi ke float
 
 # Dropdown input fields
-Sex_input = st.selectbox("Pilih jenis kelamin:", ('Laki-Laki', 'Perempuan'))
+Gender_input = st.selectbox("Pilih jenis kelamin:", ('Laki-Laki', 'Perempuan'))
 CALC_input = st.selectbox("Seberapa Sering Mengkonsumsi Alkohol:", ('Tidak Pernah', 'Kadang-Kadang', 'Sering', 'Selalu'))
 FAVC_input = st.selectbox("Apakah Anda Sering Mengkonsumsi Makanan Tinggi Kalori:", ('ya', 'tidak'))
 SCC_input = st.selectbox("Apakah Anda Memantau Asupan Kalori:", ('ya', 'tidak'))
-Smoke_input = st.selectbox("Apakah Anda Merokok:", ('ya', 'tidak'))
-FHO_input = st.selectbox("Apakah Anda Memiliki Anggota Keluarga yang Kelebihan Berat Badan:", ('ya', 'tidak'))
+SMOKE_input = st.selectbox("Apakah Anda Merokok:", ('ya', 'tidak'))
+family_history_with_overweight_input = st.selectbox("Apakah Anda Memiliki Anggota Keluarga yang Kelebihan Berat Badan:", ('ya', 'tidak'))
 CAEC_input = st.selectbox("Seberapa Sering Anda Makan di Antara Makanan:", ('Tidak Pernah', 'Kadang-Kadang', 'Sering', 'Selalu'))
 MTRANS_input = st.selectbox("Jenis Transportasi Apa yang Anda Gunakan:", ('mobil', 'Sepeda motor', 'sepeda', 'Transportasi Umum', 'Berjalan kaki'))
 
 try:
     # Encoding categorical input fields using the loaded label encoders
-    Sex_y = label_encoders['Sex'].transform([Sex_input])[0]
+    Gender_y = label_encoders['Sex'].transform([Gender_input])[0]
     CALC_y = label_encoders['CALC'].transform([CALC_input])[0]
     FAVC_y = label_encoders['FAVC'].transform([FAVC_input])[0]
     SCC_y = label_encoders['SCC'].transform([SCC_input])[0]
-    Smoke_y = label_encoders['Smoke'].transform([Smoke_input])[0]
-    FHO_y = label_encoders['FHO'].transform([FHO_input])[0]
+    SMOKE_y = label_encoders['Smoke'].transform([SMOKE_input])[0]
+    family_history_with_overweight_y = label_encoders['FHO'].transform([family_history_with_overweight_input])[0]
     CAEC_y = label_encoders['CAEC'].transform([CAEC_input])[0]
     MTRANS_y = label_encoders['MTRANS'].transform([MTRANS_input])[0]
 except KeyError as e:
@@ -104,7 +104,7 @@ if st.button("Ayo Cek!"):
             # Combining all features into a single array
             features = np.array([
                 scaled_features[0][0], scaled_features[0][1], scaled_features[0][2],
-                Sex_y, CALC_y, FAVC_y, FCVC_y, NCP_y, SCC_y, Smoke_y, CH2O_y, FHO_y, FAF_y, TUE_y, CAEC_y, MTRANS_y
+                Gender_y, CALC_y, FAVC_y, FCVC_y, NCP_y, SCC_y, SMOKE_y, CH2O_y, family_history_with_overweight_y, FAF_y, TUE_y, CAEC_y, MTRANS_y
             ]).reshape(1, -1)
             st.write(f"Features: {features}")
             
