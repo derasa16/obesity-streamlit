@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler
 
 # Memuat model yang disimpan
 model = pickle.load(open('obesity_model.pkl', 'rb'))
-scaler = pickle.load(open('Scaler.pkl', 'rb'))
+scaler = pickle.load(open('Scaler (2).pkl', 'rb'))
 
 # Judul web
 st.title("Prediksi Tingkat Obesitas")
