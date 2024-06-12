@@ -1,7 +1,6 @@
 import pickle
 import numpy as np
 import streamlit as st
-from sklearn.preprocessing import StandardScaler
 
 # Memuat model yang disimpan
 model = pickle.load(open('obesity_model.pkl', 'rb'))
