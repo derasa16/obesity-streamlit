@@ -47,13 +47,13 @@ with col1:
 
 # Dropdown input fields
 Gender_input = st.selectbox("Pilih jenis kelamin:", ('Male', 'Female'))
-CALC_input = st.selectbox("Seberapa Sering Mengkonsumsi Alkohol:", ('Tidak Pernah', 'Kadang-Kadang', 'Sering', 'Selalu'))
-FAVC_input = st.selectbox("Apakah Anda Sering Mengkonsumsi Makanan Tinggi Kalori:", ('ya', 'tidak'))
-SCC_input = st.selectbox("Apakah Anda Memantau Asupan Kalori:", ('ya', 'tidak'))
-SMOKE_input = st.selectbox("Apakah Anda Merokok:", ('ya', 'tidak'))
-FHO_input = st.selectbox("Apakah Anda Memiliki Anggota Keluarga yang Kelebihan Berat Badan:", ('ya', 'tidak'))
-CAEC_input = st.selectbox("Seberapa Sering Anda Makan di Antara Makanan:", ('Tidak Pernah', 'Kadang-Kadang', 'Sering', 'Selalu'))
-MTRANS_input = st.selectbox("Jenis Transportasi Apa yang Anda Gunakan:", ('mobil', 'Sepeda motor', 'sepeda', 'Transportasi Umum', 'Berjalan kaki'))
+CALC_input = st.selectbox("Seberapa Sering Mengkonsumsi Alkohol:", ('no', 'Sometimes', 'Frequently', 'Always'))
+FAVC_input = st.selectbox("Apakah Anda Sering Mengkonsumsi Makanan Tinggi Kalori:", ('yes', 'no'))
+SCC_input = st.selectbox("Apakah Anda Memantau Asupan Kalori:", ('yes', 'no'))
+SMOKE_input = st.selectbox("Apakah Anda Merokok:", ('yes', 'no'))
+FHO_input = st.selectbox("Apakah Anda Memiliki Anggota Keluarga yang Kelebihan Berat Badan:", ('yes', 'no'))
+CAEC_input = st.selectbox("Seberapa Sering Anda Makan di Antara Makanan:", ('no', 'Sometimes', 'Frequently', 'Always'))
+MTRANS_input = st.selectbox("Jenis Transportasi Apa yang Anda Gunakan:", ('Automobile', 'Motorbike', 'Bike', 'Public_Transportation', 'Walking'))
 
 try:
     # Encoding categorical input fields using the loaded label encoders
